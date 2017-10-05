@@ -11,8 +11,9 @@ class CategoryPage extends Component {
   }
 
   render () {
+    const category = this.props.match.params.category
     return (
-      <p>This is the Category page</p>
+      <p>Category: {category}</p>
     )
   }
 }
