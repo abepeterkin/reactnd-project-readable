@@ -1,0 +1,18 @@
+module.exports = {
+  addComment: require('./api_functions/addComment.js'),
+  addPost: require('./api_functions/addPost.js'),
+  deleteComment: require('./api_functions/deleteComment'),
+  deletePost: require('./api_functions/deletePost.js'),
+  downvoteComment: require('./api_functions/downvoteComment.js'),
+  downvotePost: require('./api_functions/downvotePost.js'),
+  editComment: require('./api_functions/editComment.js'),
+  editPost: require('./api_functions/editPost.js'),
+  getAllPosts: require('./api_functions/getAllPosts.js'),
+  getCategories: require('./api_functions/getCategories.js'),
+  getCategoryPosts: require('./api_functions/getCategoryPosts.js'),
+  getComment: require('./api_functions/getComment.js'),
+  getPost: require('./api_functions/getPost.js'),
+  getPostComments: require('./api_functions/getPostComments.js'),
+  upvoteComment: require('./api_functions/upvoteComment.js'),
+  upvotePost: require('./api_functions/upvotePost.js'),
+}

@@ -13,7 +13,7 @@ class PostPage extends Component {
   render () {
     const postId = this.props.match.params.id
     return (
-      <p>Post ID: {postId}</p>
+      <p>This is the post page! Post ID: {postId}</p>
     )
   }
 }
