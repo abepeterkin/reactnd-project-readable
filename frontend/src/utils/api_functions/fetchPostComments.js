@@ -1,12 +1,12 @@
 const { SERVER_HOSTNAME, AUTHORIZATION } = require('./constants')
 
-function getCategories () {
+function fetchPostComments (id) {
   return fetch(
-    `${SERVER_HOSTNAME}/categories`,
+    `${SERVER_HOSTNAME}/posts/${id}/comments`,
     { 
       method: 'GET',
       headers: { 'Authorization': AUTHORIZATION }
-    }).then((res) => res.json())//TODO
+    }).then((res) => res.json())
 }
 
-export default getCategories
+export default fetchPostComments
