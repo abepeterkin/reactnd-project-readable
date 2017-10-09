@@ -52,7 +52,7 @@ function categories (state = initialState, action) {
   let newState = {
     ...state
   }
-  for (category in action.categories) {
+  for (let category in action.categories) {
     if (!newState.categories.hasOwnProperty(category.name)) {
       newState.categories[category.name] = {
         name: category.name,
@@ -68,7 +68,7 @@ function posts (state = initialState, action) {
   let newState = {
     ...state
   }
-  for (post in action.posts) {
+  for (let post in action.posts) {
     let comments = []
     if (state.posts[post.id]) {
       comments = state.posts[post.id].comments
@@ -89,7 +89,7 @@ function comments (state = initialState, action) {
   let newState = {
     ...state
   }
-  for (comment in action.comments) {
+  for (let comment in action.comments) {
     newState.comments[comment.id] = comment
     const parentPost = newState.posts[comment.parentId]
     if (parentPost && _.includes(parentPost.comments, comment.id)) {
