@@ -15,7 +15,7 @@ function addPost (id, title, body, author, category) {
         category,
         timestamp: Date.now()
       }
-    })
+    }).then((res) => res.json())
 }
 
 export default addPost

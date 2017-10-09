@@ -6,7 +6,7 @@ function deletePost (id) {
     { 
       method: 'DELETE',
       headers: { 'Authorization': AUTHORIZATION }
-    })
+    }).then((res) => res.json())
 }
 
 export default deletePost

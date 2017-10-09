@@ -10,7 +10,7 @@ function editComment (id, body) {
         timestamp: Date.now(),
         body
       }
-    })
+    }).then((res) => res.json())
 }
 
 export default editComment

@@ -2,7 +2,9 @@ import _ from 'lodash'
 import { combineReducers } from 'redux'
 
 import {
-  
+  RECIEVE_CATEGORIES,
+  RECIEVE_POSTS,
+  RECIEVE_COMMENTS
 } from '../actions'
 
 /* STORE STRUCTURE
@@ -49,54 +51,71 @@ const initialState = {
 }
 
 function categories (state = initialState, action) {
-  let newState = {
-    ...state
-  }
-  for (let category in action.categories) {
-    if (!newState.categories.hasOwnProperty(category.name)) {
-      newState.categories[category.name] = {
-        name: category.name,
-        path: category.path,
-        posts: []
+  switch (action.type) {
+    case RECIEVE_CATEGORIES:
+      let newState = {
+        ...state
       }
-    }
+      for (let category in action.categories) {
+        if (!newState.categories.hasOwnProperty(category.name)) {
+          newState.categories[category.name] = {
+            name: category.name,
+            path: category.path,
+            posts: []
+          }
+        }
+      }
+      return newState
+    default:
+      return state
   }
-  return newState
 }
 
 function posts (state = initialState, action) {
-  let newState = {
-    ...state
+  switch (action.state) {
+    case RECIEVE_POSTS:
+      let newState = {
+          ...state
+      }
+      for (let post in action.posts) {
+        let comments = []
+        if (state.posts[post.id]) {
+          comments = state.posts[post.id].comments
+        }
+        newState.posts[post.id] = {
+          ...post,
+          comments
+        }
+        const categoryPosts = newState.categories[post.category].posts
+        if (categoryPosts && _.includes(categoryPosts, post.id)) {
+          categoryPosts.push(post.id)
+        }
+      }
+      return newState
+    default:
+      return state
   }
-  for (let post in action.posts) {
-    let comments = []
-    if (state.posts[post.id]) {
-      comments = state.posts[post.id].comments
-    }
-    newState.posts[post.id] = {
-      ...post,
-      comments
-    }
-    const categoryPosts = newState.categories[post.category].posts
-    if (categoryPosts && _.includes(categoryPosts, post.id)) {
-      categoryPosts.push(post.id)
-    }
-  }
-  return newState
+  
 }
 
 function comments (state = initialState, action) {
-  let newState = {
-    ...state
+  switch (action.state) {
+    case RECIEVE_COMMENTS:
+      let newState = {
+      ...state
+      }
+      for (let comment in action.comments) {
+        newState.comments[comment.id] = comment
+        const parentPost = newState.posts[comment.parentId]
+        if (parentPost && _.includes(parentPost.comments, comment.id)) {
+          parentPost.comments.push(comment.id)
+        }
+      }
+      return newState
+    default:
+      return state
   }
-  for (let comment in action.comments) {
-    newState.comments[comment.id] = comment
-    const parentPost = newState.posts[comment.parentId]
-    if (parentPost && _.includes(parentPost.comments, comment.id)) {
-      parentPost.comments.push(comment.id)
-    }
-  }
-  return newState
+  
 }
 
 export default combineReducers({

@@ -9,7 +9,7 @@ function downvotePost (id) {
       body: {
         option: 'downVote'
       }
-    })
+    }).then((res) => res.json())
 }
 
 export default downvotePost

@@ -14,7 +14,7 @@ function addComment (body, author, parentId) {
         parentId,
         timestamp: Date.now()
       }
-    })
+    }).then((res) => res.json())
 }
 
 export default addComment

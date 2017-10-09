@@ -10,7 +10,7 @@ function editPost (id, title, body) {
         title,
         body,
       }
-    })
+    }).then((res) => res.json())
 }
 
 export default editPost

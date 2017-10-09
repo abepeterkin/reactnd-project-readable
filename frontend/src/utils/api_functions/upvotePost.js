@@ -9,7 +9,7 @@ function upvotePost (id) {
       body: {
         option: 'upVote'
       }
-    })
+    }).then((res) => res.json())
 }
 
 export default upvotePost
