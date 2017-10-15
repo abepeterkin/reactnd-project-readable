@@ -22,7 +22,7 @@ export const recieveComments = comments => ({
 // CATEGORY ACTIONS
 
 export const fetchCategories = () => dispatch => (
-  API.fetchCategories().then(categories => dispatch(receiveCategories(categories)))
+  API.fetchCategories().then(response => dispatch(receiveCategories(response.categories)))
 )
 
 export const fetchCategoryPosts = (category) => dispatch => (

@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import { combineReducers } from 'redux'
 
 import {
@@ -12,8 +11,7 @@ import {
     categories: {
       <categoryname>: {
         name: <name>,
-        path: <path>,
-        posts: [array of post ids]
+        path: <path>
       }
     },
     posts: {
@@ -25,8 +23,7 @@ import {
         author: <author>,
         category: <category>,
         votescore: <votescore>,
-        deleted: <deleted>,
-        comments: [array of comment ids]
+        deleted: <deleted>
       }
     },
     comments: {
@@ -44,26 +41,15 @@ import {
   }
 */
 
-const initialState = {
-  categories: {},
-  posts: {},
-  comments: {}
-}
-
-function categories (state = initialState, action) {
+function categories (state = {}, action) {
   switch (action.type) {
     case RECIEVE_CATEGORIES:
       let newState = {
         ...state
       }
-      for (let category in action.categories) {
-        if (!newState.categories.hasOwnProperty(category.name)) {
-          newState.categories[category.name] = {
-            name: category.name,
-            path: category.path,
-            posts: []
-          }
-        }
+      for (let i = 0; i < action.categories.length; i++) {
+        const category = action.categories[i]
+        newState[category.name] = category
       }
       return newState
     default:
@@ -71,25 +57,15 @@ function categories (state = initialState, action) {
   }
 }
 
-function posts (state = initialState, action) {
+function posts (state = {}, action) {
   switch (action.state) {
     case RECIEVE_POSTS:
       let newState = {
           ...state
       }
-      for (let post in action.posts) {
-        let comments = []
-        if (state.posts[post.id]) {
-          comments = state.posts[post.id].comments
-        }
-        newState.posts[post.id] = {
-          ...post,
-          comments
-        }
-        const categoryPosts = newState.categories[post.category].posts
-        if (categoryPosts && _.includes(categoryPosts, post.id)) {
-          categoryPosts.push(post.id)
-        }
+      for (let i = 0; i < action.posts.length; i++) {
+        const post = action.posts[0]
+        newState[post.id] = post
       }
       return newState
     default:
@@ -98,24 +74,20 @@ function posts (state = initialState, action) {
   
 }
 
-function comments (state = initialState, action) {
+function comments (state = {}, action) {
   switch (action.state) {
     case RECIEVE_COMMENTS:
       let newState = {
-      ...state
+        ...state
       }
-      for (let comment in action.comments) {
-        newState.comments[comment.id] = comment
-        const parentPost = newState.posts[comment.parentId]
-        if (parentPost && _.includes(parentPost.comments, comment.id)) {
-          parentPost.comments.push(comment.id)
-        }
+      for (let i = 0; i < action.comments.length; i++) {
+        const comment = action.comments[i]
+        newState[comment.id] = comment
       }
       return newState
     default:
       return state
   }
-  
 }
 
 export default combineReducers({
