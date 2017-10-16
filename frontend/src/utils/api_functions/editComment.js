@@ -1,16 +1,18 @@
 const { SERVER_HOSTNAME, AUTHORIZATION } = require('./constants')
+const rp = require('request-promise');
 
 function editComment (id, body) {
-  return fetch(
-    `${SERVER_HOSTNAME}/comments/${id}`,
-    { 
-      method: 'PUT',
-      headers: { 'Authorization': AUTHORIZATION },
-      body: {
-        timestamp: Date.now(),
-        body
-      }
-    }).then((res) => res.json())
+  const options = {
+    method: 'PUT',
+    uri: `${SERVER_HOSTNAME}/comments/${id}`,
+    headers: { 'Authorization': AUTHORIZATION },
+    body: {
+      timestamp: Date.now(),
+      body
+    },
+    json: true
+  }
+  return rp(options)
 }
 
 export default editComment

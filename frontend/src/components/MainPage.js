@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchCategories } from '../actions'
+import { fetchCategories, fetchAllPosts } from '../actions'
+import PostStub from './PostStub'
 
 class MainPage extends Component {
 
@@ -10,21 +11,33 @@ class MainPage extends Component {
 
   componentDidMount() {
     this.props.dispatch(fetchCategories())
+    this.props.dispatch(fetchAllPosts())
   }
 
   render () {
-    //console.log('MAINPAGE LINE 16:')
-    //console.log(this.props)
-    const { categories} = this.props
+    const { categories, posts } = this.props
     return (
       <div>
         <p>This is the main page!</p>
         <p>Categories:</p>
         {Object.values(categories).map((category) => (
-          <div>
-            <a href={category.path} > {category.name} </a>
+          <div key={category.name}>
+            <a href={'category/' + category.path} > {category.name} </a>
           </div>
         ))}
+        <p>Posts:</p>
+        {Object.values(posts).map((post) => (
+          <PostStub
+            key={post.id}
+            id={post.id}
+            timestamp={post.timestamp}
+            title={post.title}
+            body={post.body}
+            author={post.author}
+            category={post.category}
+            voteScore={post.voteScore}
+          />
+      ))}
       </div>
     )
   }

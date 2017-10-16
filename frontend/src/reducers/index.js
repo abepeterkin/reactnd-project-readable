@@ -58,13 +58,13 @@ function categories (state = {}, action) {
 }
 
 function posts (state = {}, action) {
-  switch (action.state) {
+  switch (action.type) {
     case RECIEVE_POSTS:
       let newState = {
           ...state
       }
       for (let i = 0; i < action.posts.length; i++) {
-        const post = action.posts[0]
+        const post = action.posts[i]
         newState[post.id] = post
       }
       return newState
@@ -75,7 +75,7 @@ function posts (state = {}, action) {
 }
 
 function comments (state = {}, action) {
-  switch (action.state) {
+  switch (action.type) {
     case RECIEVE_COMMENTS:
       let newState = {
         ...state

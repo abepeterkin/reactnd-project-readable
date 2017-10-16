@@ -1,15 +1,17 @@
 const { SERVER_HOSTNAME, AUTHORIZATION } = require('./constants')
+const rp = require('request-promise');
 
 function downvoteComment (id) {
-  return fetch(
-    `${SERVER_HOSTNAME}/comments/${id}`,
-    { 
-      method: 'POST',
-      headers: { 'Authorization': AUTHORIZATION },
-      body: {
-        option: 'downVote'
-      }
-    }).then((res) => res.json())
+  const options = {
+    method: 'POST',
+    uri: `${SERVER_HOSTNAME}/comments/${id}`,
+    headers: { 'Authorization': AUTHORIZATION },
+    body: {
+      option: 'downVote'
+    },
+    json: true
+  }
+  return rp(options)
 }
 
 export default downvoteComment

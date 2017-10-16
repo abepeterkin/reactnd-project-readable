@@ -1,15 +1,17 @@
 const { SERVER_HOSTNAME, AUTHORIZATION } = require('./constants')
+const rp = require('request-promise');
 
 function upvotePost (id) {
-  return fetch(
-    `${SERVER_HOSTNAME}/posts/${id}`,
-    { 
-      method: 'POST',
-      headers: { 'Authorization': AUTHORIZATION },
-      body: {
+  const options = {
+    method: 'POST',
+    uri: `${SERVER_HOSTNAME}/posts/${id}`,
+    headers: { 'Authorization': AUTHORIZATION },
+    body: {
         option: 'upVote'
-      }
-    }).then((res) => res.json())
+    },
+    json: true
+  }
+  return rp(options)
 }
 
 export default upvotePost

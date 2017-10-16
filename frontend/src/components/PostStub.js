@@ -1,20 +1,19 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 
-class Post extends Component {
+class PostStub extends Component {
 
   render () {
-    const {id, timestamp, title, body, author, category, votescore} = this.props
+    const {id, timestamp, title, body, author, category, voteScore} = this.props
     return (
-      <div>
-        <p><b>{author}: {title}</b></p>
-        <p>{body}</p>
+      <div className='post-stub'>
+        ({voteScore}) <a href={'/post/' + id}><b>{author}:</b> {title}</a>
       </div>
     )
   }
 }
 
-Post.propTypes = {
+PostStub.propTypes = {
   id: PropTypes.string,
   timestamp: PropTypes.number,
   title: PropTypes.string,
@@ -25,4 +24,4 @@ Post.propTypes = {
   // deleted: PropTypes.bool
 }
 
-export default Post
+export default PostStub

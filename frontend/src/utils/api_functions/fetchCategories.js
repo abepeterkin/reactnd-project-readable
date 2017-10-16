@@ -1,12 +1,14 @@
 const { SERVER_HOSTNAME, AUTHORIZATION } = require('./constants')
+const rp = require('request-promise');
 
 function fetchCategories () {
-  return fetch(
-    `${SERVER_HOSTNAME}/categories`,
-    { 
-      method: 'GET',
-      headers: { 'Authorization': AUTHORIZATION }
-    }).then((res) => res.json())
+  const options = {
+    method: 'GET',
+    uri: `${SERVER_HOSTNAME}/categories`,
+    headers: { 'Authorization': AUTHORIZATION },
+    json: true
+  }
+  return rp(options)
 }
 
 export default fetchCategories

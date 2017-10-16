@@ -1,12 +1,14 @@
 const { SERVER_HOSTNAME, AUTHORIZATION } = require('./constants')
+const rp = require('request-promise');
 
 function fetchCategoryPosts (category) {
-  return fetch(
-    `${SERVER_HOSTNAME}/${category}/posts`,
-    { 
-      method: 'GET',
-      headers: { 'Authorization': AUTHORIZATION }
-    }).then((res) => res.json())
+  const options = {
+    method: 'GET',
+    uri: `${SERVER_HOSTNAME}/${category}/posts`,
+    headers: { 'Authorization': AUTHORIZATION },
+    json: true
+  }
+  return rp(options)
 }
 
 export default fetchCategoryPosts
