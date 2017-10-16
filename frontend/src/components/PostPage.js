@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import { fetchPost, fetchPostComments, upvotePost, downvotePost } from '../actions'
+import Comment from './Comment'
 
 class PostPage extends Component {
 
@@ -26,16 +27,16 @@ class PostPage extends Component {
         <div>
           <p>(Posted by <b>{author}</b> on <b>{timeFormatted}</b>)</p>
           <p>Score: <b>{voteScore}  </b>
-            [<span style={{color: 'blue', cursor: 'pointer'}} onClick={this.upvote.bind(this)}>Upvote</span>]
-            [<span style={{color: 'blue', cursor: 'pointer'}} onClick={this.downvote.bind(this)}>Downvote</span>]
+            [<span style={{color: 'blue', cursor: 'pointer'}} onClick={this.upvote.bind(this)}>+1</span>]
+            [<span style={{color: 'blue', cursor: 'pointer'}} onClick={this.downvote.bind(this)}>-1</span>]
           </p>
           <h3>{title}</h3>
           <p>{body}</p>
           <p>COMMENTS:</p>
           {Object.values(this.props.comments).map((comment) => (
-            <div key={comment.id} className='comment'>
-              {comment.author}: {comment.body}
-            </div>
+            <Comment 
+              key={comment.id}
+              id={comment.id}/>
           ))}
         </div>
       )
