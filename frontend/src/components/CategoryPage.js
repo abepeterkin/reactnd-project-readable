@@ -3,10 +3,24 @@ import { connect } from 'react-redux'
 import { fetchCategoryPosts } from '../actions'
 import PostStub from './PostStub'
 
+import { voteScoreSort, timestampSort } from '../utils/sort'
+
 class CategoryPage extends Component {
+
+  state = {
+    sort: voteScoreSort
+  }
 
   componentDidMount() {
     this.props.dispatch(fetchCategoryPosts(this.props.match.params.category))
+  }
+
+  changeSortMethod(event) {
+    if (event.target.value === "score") {
+      this.setState({sort: voteScoreSort})
+    } else if (event.target.value === 'time') {
+      this.setState({sort: timestampSort})
+    }
   }
 
   render () {
@@ -15,16 +29,11 @@ class CategoryPage extends Component {
     return (
       <div>
       <p>Category: {category}</p>
-      {Object.values(posts).map((post) => (
+      
+      {voteScoreSort(Object.values(posts)).map((post) => (
         <PostStub
           key={post.id}
-          id={post.id}
-          timestamp={post.timestamp}
-          title={post.title}
-          body={post.body}
-          author={post.author}
-          category={post.category}
-          voteScore={post.voteScore}
+          post={post}
         />
       ))}
       </div>
