@@ -1,12 +1,15 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { fetchPost, upvotePost, downvotePost } from '../actions'
+import { fetchPost, fetchPostComments, upvotePost, downvotePost } from '../actions'
+import { voteScoreSort } from '../utils/sort'
+import Comment from './Comment'
 
 class Post extends Component {
 
   componentDidMount() {
     this.props.dispatch(fetchPost(this.props.id))
+    this.props.dispatch(fetchPostComments(this.props.id))
   }
 
   upvote() {
@@ -22,6 +25,7 @@ class Post extends Component {
       const {id, title, timestamp, body, author, voteScore} = this.props.post
       const date = new Date(timestamp)
       const timeFormatted = date.toDateString()
+      const comments = this.props.comments
       return (
         <div className='post'>
           <p>(Posted by <b>{author}</b> on <b>{timeFormatted}</b>)</p>
@@ -31,6 +35,16 @@ class Post extends Component {
           </p>
           <h3>{title}</h3>
           <p>{body}</p>
+          <p>COMMENTS ({comments.length}):</p>
+          {(comments.length < 1) &&
+            <p> No comments yet.</p>
+          }
+          {voteScoreSort(Object.values(comments)).map((comment) => (
+            <Comment 
+              key={comment.id}
+              id={comment.id}
+            />
+          ))}
         </div>
       )
     } else {
@@ -43,7 +57,10 @@ class Post extends Component {
 function mapStateToProps (state, ownProps) {
   const postId = ownProps.id
   return {
-    post: state.posts[postId]
+    post: state.posts[postId],
+    comments: Object.values(state.comments).filter((comment) => {
+      return comment.parentId === postId && !comment.deleted
+    })
   }
 }
 
