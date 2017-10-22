@@ -31,7 +31,7 @@ class MainPage extends Component {
         <br/> <b>Categories:</b>
         {Object.values(categories).map((category) => (
           <div key={category.name}>
-            <a href={'category/' + category.path} > {category.name} </a>
+            <a href={`/${category.path}`} > {category.name} </a>
           </div>
         ))}
         <br /> <b>Posts:</b>
