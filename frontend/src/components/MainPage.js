@@ -30,20 +30,20 @@ class MainPage extends Component {
     return (
       <div>
         <NewPost categories={Object.keys(categories)}/>
-        <br/> <b>Categories:</b>
+        <p> <b>Categories:</b> </p>
         {Object.values(categories).map((category) => (
           <div key={category.name}>
             <a href={`/${category.path}`} > {category.name} </a>
           </div>
         ))} <br /> 
-        <b>Posts:</b>
+        <p><b>Posts:</b> </p>
         <form>
           Sort by
           <select onChange={this.changeSortMethod.bind(this)}>
             <option value="score">Score</option>
             <option value="time">Time Posted</option>
           </select>
-        </form>
+        </form> <br />
         {sort(Object.values(posts)).map((post) => (
           <PostStub
             key={post.id}

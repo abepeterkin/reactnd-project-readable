@@ -57,7 +57,7 @@ class Post extends Component {
           <h3>{title}</h3>
           <p>{body}</p>
           <p><b>COMMENTS ({comments.length}):</b></p>
-          <NewComment postId={id}/>
+          <NewComment postId={id}/> <br />
           {(comments.length < 1) &&
             <p> No comments yet.</p>
           }
