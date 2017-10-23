@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import { fetchCategoryPosts } from '../actions'
 import PostStub from './PostStub'
+import NewPost from './NewPost'
 
 import { voteScoreSort, timestampSort } from '../utils/sort'
 
@@ -28,8 +29,15 @@ class CategoryPage extends Component {
     const { posts } = this.props
     return (
       <div>
-      <p>Category: {category}</p>
-      
+      <NewPost categories={[category]}/>
+      <p><b>Posts in category: {category}</b></p>
+      <form>
+          Sort by 
+          <select onChange={this.changeSortMethod.bind(this)}>
+            <option value="score">Score</option>
+            <option value="time">Time Posted</option>
+          </select>
+        </form>  <br />
       {voteScoreSort(Object.values(posts)).map((post) => (
         <PostStub
           key={post.id}

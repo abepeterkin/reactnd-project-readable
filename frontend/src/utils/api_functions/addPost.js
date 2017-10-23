@@ -2,7 +2,7 @@ const uuidv4 = require('uuid/v4')
 const { SERVER_HOSTNAME, AUTHORIZATION } = require('./constants')
 const rp = require('request-promise');
 
-function addPost (id, title, body, author, category) {
+function addPost (title, body, author, category) {
   const options = {
     method: 'POST',
     uri: `${SERVER_HOSTNAME}/posts`,

@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { fetchCategories, fetchAllPosts } from '../actions'
 import PostStub from './PostStub'
 import { voteScoreSort, timestampSort } from '../utils/sort'
+import NewPost from './NewPost'
 
 class MainPage extends Component {
 
@@ -28,21 +29,22 @@ class MainPage extends Component {
     const { sort } = this.state
     return (
       <div>
+        <NewPost categories={Object.keys(categories)}/>
         <br/> <b>Categories:</b>
         {Object.values(categories).map((category) => (
           <div key={category.name}>
             <a href={`/${category.path}`} > {category.name} </a>
           </div>
-        ))}
-        <br /> <b>Posts:</b>
+        ))} <br /> 
+        <b>Posts:</b>
         <form>
-          <span> Sort by </span>
+          Sort by
           <select onChange={this.changeSortMethod.bind(this)}>
             <option value="score">Score</option>
             <option value="time">Time Posted</option>
           </select>
         </form>
-        {this.state.sort(Object.values(posts)).map((post) => (
+        {sort(Object.values(posts)).map((post) => (
           <PostStub
             key={post.id}
             post={post}

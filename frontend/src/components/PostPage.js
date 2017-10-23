@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
-import { fetchPost, fetchPostComments, upvotePost, downvotePost } from '../actions'
 import Post from './Post'
 
 class PostPage extends Component {
@@ -15,4 +14,4 @@ class PostPage extends Component {
   }
 }
 
-export default PostPage
+export default connect()(PostPage)

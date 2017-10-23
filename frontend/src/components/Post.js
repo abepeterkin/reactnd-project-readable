@@ -1,15 +1,29 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
-import { fetchPost, fetchPostComments, upvotePost, downvotePost } from '../actions'
+import { fetchPost, fetchPostComments, upvotePost, downvotePost, deletePost } from '../actions'
 import { voteScoreSort } from '../utils/sort'
 import Comment from './Comment'
+import EditPost from './EditPost'
+import NewComment from './NewComment'
 
 class Post extends Component {
+
+  state = {
+    editModalOpen: false,
+    commentModalOpen: false,
+    newTitle: null,
+    newBody: null
+  }
 
   componentDidMount() {
     this.props.dispatch(fetchPost(this.props.id))
     this.props.dispatch(fetchPostComments(this.props.id))
+    if (this.props.post) {
+      this.setState({
+        newTitle: this.props.post.title,
+        newBody: this.props.post.body
+      })
+    }
   }
 
   upvote() {
@@ -20,6 +34,11 @@ class Post extends Component {
     this.props.dispatch(downvotePost(this.props.id))
   }
 
+  delete() {
+    this.props.dispatch(deletePost(this.props.id))
+    window.location.href = '/';
+  }
+
   render () {
     if (this.props.post) {
       const {id, title, timestamp, body, author, voteScore} = this.props.post
@@ -28,14 +47,17 @@ class Post extends Component {
       const comments = this.props.comments
       return (
         <div className='post'>
-          <p>(Posted by <b>{author}</b> on <b>{timeFormatted}</b>)</p>
+          <p>Posted by <b>{author}</b> on <b>{timeFormatted}</b> </p> 
+          <EditPost post={this.props.post} />
+          <button  onClick={this.delete.bind(this)}>Delete</button>
           <p>Score: <b>{voteScore}  </b>
-            [<span style={{color: 'blue', cursor: 'pointer'}} onClick={this.upvote.bind(this)}>+1</span>]
-            [<span style={{color: 'blue', cursor: 'pointer'}} onClick={this.downvote.bind(this)}>-1</span>]
+            <button className='upvote-button' onClick={this.upvote.bind(this)}>+1</button>
+            <button className='downvote-button' onClick={this.downvote.bind(this)}>-1</button>
           </p>
           <h3>{title}</h3>
           <p>{body}</p>
-          <p>COMMENTS ({comments.length}):</p>
+          <p><b>COMMENTS ({comments.length}):</b></p>
+          <NewComment postId={id}/>
           {(comments.length < 1) &&
             <p> No comments yet.</p>
           }
@@ -45,12 +67,12 @@ class Post extends Component {
               id={comment.id}
             />
           ))}
+          
         </div>
       )
     } else {
       return <p> Sorry, that post was not found. </p>
     }
-    
   }
 }
 

@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
 import { fetchPostComments, upvotePost, downvotePost } from '../actions'
 
 class PostStub extends Component {
@@ -18,14 +17,14 @@ class PostStub extends Component {
   }
 
   render () {
-    const { id, timestamp, title, body, author, category, voteScore } = this.props.post
+    const { id, title, author, category, voteScore } = this.props.post
     const comments = this.props.comments
     return (
       <div className='post-stub'>
-        <span>{voteScore} [
-        <span style={{color: 'blue', cursor: 'pointer'}} onClick={this.upvote.bind(this)}>+1</span>] [
-        <span style={{color: 'blue', cursor: 'pointer'}} onClick={this.downvote.bind(this)}>-1</span>
-        ] </span>
+        <span>{voteScore} 
+          <button className='upvote-button' onClick={this.upvote.bind(this)}>+1</button>
+          <button className='downvote-button' onClick={this.downvote.bind(this)}>-1</button> 
+        </span>
         <a href={`/${category}/${id}`}><b>{author}:</b> {title}</a> 
         {comments && 
           <span> ({comments.length} comments)</span>
