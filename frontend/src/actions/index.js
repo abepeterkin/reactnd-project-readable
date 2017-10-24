@@ -1,4 +1,4 @@
-const API = require('../utils/API')
+const API = require('../utils/api')
 
 export const RECIEVE_CATEGORIES = 'RECEIVE_CATEGORIES'
 export const RECIEVE_POSTS = 'RECEIVE_POSTS'
