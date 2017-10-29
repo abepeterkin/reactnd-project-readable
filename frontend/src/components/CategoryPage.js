@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { fetchCategoryPosts } from '../actions'
 import PostStub from './PostStub'
 import NewPost from './NewPost'
+import { Header, Divider } from 'semantic-ui-react'
 
 import { voteScoreSort, timestampSort } from '../utils/sort'
 
@@ -29,15 +30,17 @@ class CategoryPage extends Component {
     const { posts } = this.props
     return (
       <div>
+      <Header as='h2'>Category:  {category} </Header>
       <NewPost categories={[category]}/>
-      <p><b>Posts in category: {category}</b></p>
+      <Header as='h2' >Posts: </Header>
       <form>
           Sort by 
           <select onChange={this.changeSortMethod.bind(this)}>
             <option value="score">Score</option>
             <option value="time">Time Posted</option>
           </select>
-        </form>  <br />
+        </form>
+        <Divider />
       {voteScoreSort(Object.values(posts)).map((post) => (
         <PostStub
           key={post.id}

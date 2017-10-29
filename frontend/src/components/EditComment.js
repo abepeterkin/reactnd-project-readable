@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import { editComment } from '../actions'
 import Modal from 'react-modal'
+import { Button, TextArea, Header, Form } from 'semantic-ui-react'
 
 class EditComment extends Component {
 
@@ -43,8 +44,8 @@ class EditComment extends Component {
   render () {
     const {body} = this.props.comment
     return (
-      <div>
-      <button  onClick={this.openEditModal.bind(this)}>Edit</button>
+      <span>
+      <Button basic color='blue' compact onClick={this.openEditModal.bind(this)}>Edit</Button>
       <Modal
         className='modal'
         overlayClassName='overlay'
@@ -52,15 +53,16 @@ class EditComment extends Component {
         onRequestClose={this.closeEditModal.bind(this)}
         contentLabel='Modal'
       >
-      <form onSubmit={this.submitEdit.bind(this)}>
-        Body: <textarea 
+      <Form onSubmit={this.submitEdit.bind(this)}>
+        <Header as='h4'>Body:</Header> 
+        <TextArea 
           defaultValue={body} 
           onBlur={this.handleBodyChange.bind(this)}>
-        </textarea> <br />
-        <button type='submit'>SUBMIT </button>
-      </form>
+        </TextArea> <br />
+        <Button type='submit'>SUBMIT </Button>
+      </Form>
       </Modal>
-    </div>
+    </span>
     )
   }
 }

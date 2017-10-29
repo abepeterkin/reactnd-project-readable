@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import { editPost } from '../actions'
 import Modal from 'react-modal'
+import { Button, Header, TextArea, Form } from 'semantic-ui-react'
 
 class EditPost extends Component {
 
@@ -51,8 +52,8 @@ class EditPost extends Component {
   render () {
     const {title, body} = this.props.post
     return (
-      <div>
-      <button  onClick={this.openEditModal.bind(this)}>Edit</button>
+      <span>
+      <Button basic color='blue' onClick={this.openEditModal.bind(this)}>Edit</Button>
       <Modal
         className='modal'
         overlayClassName='overlay'
@@ -60,20 +61,21 @@ class EditPost extends Component {
         onRequestClose={this.closeEditModal.bind(this)}
         contentLabel='Modal'
       >
-        <form onSubmit={this.submitEdit.bind(this)}>
-          Title: 
-          <textarea 
+        <Form onSubmit={this.submitEdit.bind(this)}>
+          <Header as='h4'>Title:</Header> 
+          <TextArea 
             defaultValue={title} 
             onBlur={this.handleTitleChange.bind(this)}> 
-          </textarea> <br />
-          Body: <textarea 
+          </TextArea> <br />
+          <Header as='h4'>Body:</Header> 
+          <TextArea 
             defaultValue={body} 
             onBlur={this.handleBodyChange.bind(this)}>
-          </textarea> <br />
-          <button type='submit'>SUBMIT </button>
-        </form>
+          </TextArea> <br />
+          <Button type='submit'>SUBMIT </Button>
+        </Form>
       </Modal>
-      </div>
+      </span>
     )
   }
 }

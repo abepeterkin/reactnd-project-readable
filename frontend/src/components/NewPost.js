@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import { addPost } from '../actions'
 import Modal from 'react-modal'
+import { Input, TextArea, Select, Button, Header, Form } from 'semantic-ui-react'
 
 class NewPost extends Component {
 
@@ -25,6 +26,7 @@ class NewPost extends Component {
   }
 
   handleCategoryChange(event) {
+    console.log('handlecatagorychange')
     this.setState({
       category: event.target.value
     })
@@ -56,10 +58,16 @@ class NewPost extends Component {
   }
 
   render () {
-    const categories = this.props.categories
+    const categories = this.props.categories.map((category) => (
+      {
+        key: category,
+        value: category,
+        text: category
+      }
+    ))
     return (
       <div>
-      <button  onClick={this.openEditModal.bind(this)}>Make a new post</button>
+      <Button  onClick={this.openEditModal.bind(this)}>Make a new post</Button>
       <Modal
       className='modal'
       overlayClassName='overlay'
@@ -67,27 +75,29 @@ class NewPost extends Component {
       onRequestClose={this.closeEditModal.bind(this)}
       contentLabel='Modal'
     >
-      <form onSubmit={this.submitComment.bind(this)}>
-        Category:
-        <select id='category-select' onChange={this.handleCategoryChange.bind(this)}>
-          {categories.map((category) => (
-            <option key={category} value={category}> {category} </option>
-          ))}
-        </select> <br />
-        Author: 
-        <textarea
+      <Form onSubmit={this.submitComment.bind(this)}>
+        <Header as='h4' > Category: </Header>
+        <Select 
+          id='category-select' 
+          placeholder='Select a category' 
+          onChange={this.handleCategoryChange.bind(this)} 
+          options={categories} 
+        />
+        <Header as='h4'>Author:</ Header> 
+        <Input
           onBlur={this.handleAuthorChange.bind(this)}> 
-        </textarea> <br />
-        Title: 
-        <textarea
+        </ Input> <br />
+        <Header as='h4'>Title:</Header> 
+        <Input
           onBlur={this.handleTitleChange.bind(this)}>
-        </textarea> <br />
-        Body: 
-        <textarea
+        </Input> <br />
+        <Header as='h4'>Body:</Header> 
+        <TextArea
+          rows='3'
           onBlur={this.handleBodyChange.bind(this)}>
-        </textarea> <br />
-        <button type='submit'>SUBMIT </button>
-      </form>
+        </TextArea> <br />
+        <Button type='submit'>SUBMIT </Button>
+      </Form>
     </Modal>
       </div>
     )

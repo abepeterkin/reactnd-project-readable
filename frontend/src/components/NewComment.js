@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import { addComment } from '../actions'
 import Modal from 'react-modal'
+import { Button, Header, Form, TextArea } from 'semantic-ui-react'
 
 class NewComment extends Component {
 
@@ -44,26 +45,26 @@ class NewComment extends Component {
   render () {
     return (
       <div>
-      <button  onClick={this.openEditModal.bind(this)}>Post a new comment</button>
+      <Button onClick={this.openEditModal.bind(this)}>Post a new comment</Button>
       <Modal
       className='modal'
       overlayClassName='overlay'
       isOpen={this.state.modalOpen}
       onRequestClose={this.closeEditModal.bind(this)}
       contentLabel='Modal'
-    >
-      <form onSubmit={this.submitComment.bind(this)}>
-        Author: 
-        <textarea
-          onBlur={this.handleAuthorChange.bind(this)}> 
-        </textarea> <br />
-        Body: 
-        <textarea
-          onBlur={this.handleBodyChange.bind(this)}>
-        </textarea> <br />
-        <button type='submit'>SUBMIT </button>
-      </form>
-    </Modal>
+      >
+        <Form onSubmit={this.submitComment.bind(this)}>
+          <Header as='h4'>Author:</Header> 
+          <TextArea
+            onBlur={this.handleAuthorChange.bind(this)}> 
+          </TextArea>
+          <Header as='h4'>Body:</Header> 
+          <TextArea
+            onBlur={this.handleBodyChange.bind(this)}>
+          </TextArea> <br />
+          <Button type='submit'>SUBMIT </Button>
+        </Form>
+      </Modal>
       </div>
     )
   }

@@ -5,9 +5,11 @@ import reducer from './reducers'
 import thunk from 'redux-thunk';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom'
-import './index.css';
+import 'semantic-ui-css/semantic.min.css';
+import './modal.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
+
 
 const store = createStore(reducer, applyMiddleware(thunk))
 

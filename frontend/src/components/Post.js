@@ -5,6 +5,7 @@ import { voteScoreSort } from '../utils/sort'
 import Comment from './Comment'
 import EditPost from './EditPost'
 import NewComment from './NewComment'
+import { Icon, Button, Segment, Header } from 'semantic-ui-react'
 
 class Post extends Component {
 
@@ -46,17 +47,22 @@ class Post extends Component {
       const timeFormatted = date.toDateString()
       const comments = this.props.comments
       return (
-        <div className='post'>
-          <p>Posted by <b>{author}</b> on <b>{timeFormatted}</b> </p> 
-          <EditPost post={this.props.post} />
-          <button  onClick={this.delete.bind(this)}>Delete</button>
-          <p>Score: <b>{voteScore}  </b>
-            <button className='upvote-button' onClick={this.upvote.bind(this)}>+1</button>
-            <button className='downvote-button' onClick={this.downvote.bind(this)}>-1</button>
-          </p>
-          <h3>{title}</h3>
-          <p>{body}</p>
-          <p><b>COMMENTS ({comments.length}):</b></p>
+        <div >
+          <Segment.Group>
+            <Segment>
+              <Header as='h3'>{title}</Header>
+              <p>{body}</p>
+            </Segment>
+            <Segment secondary>
+              <p> Posted by <b>{author}</b> on <b>{timeFormatted}</b> </p>
+              Score: <b>{voteScore}  </b>
+              <Icon link size='big' name='thumbs outline up' onClick={this.upvote.bind(this)}></Icon>
+              <Icon  link size='big' name='thumbs outline down' onClick={this.downvote.bind(this)}></Icon> 
+              <EditPost post={this.props.post} />
+              <Button basic color='red' onClick={this.delete.bind(this)}>Delete</Button>
+            </Segment>
+          </Segment.Group>
+          <Header as='h3' dividing>COMMENTS ({comments.length}):</Header>
           <NewComment postId={id}/> <br />
           {(comments.length < 1) &&
             <p> No comments yet.</p>

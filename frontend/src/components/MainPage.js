@@ -4,6 +4,7 @@ import { fetchCategories, fetchAllPosts } from '../actions'
 import PostStub from './PostStub'
 import { voteScoreSort, timestampSort } from '../utils/sort'
 import NewPost from './NewPost'
+import { Header, Divider } from 'semantic-ui-react'
 
 class MainPage extends Component {
 
@@ -30,20 +31,13 @@ class MainPage extends Component {
     return (
       <div>
         <NewPost categories={Object.keys(categories)}/>
-        <p> <b>Categories:</b> </p>
-        {Object.values(categories).map((category) => (
-          <div key={category.name}>
-            <a href={`/${category.path}`} > {category.name} </a>
-          </div>
-        ))} <br /> 
-        <p><b>Posts:</b> </p>
-        <form>
+        <Header as='h2'>Posts: </Header>
           Sort by
           <select onChange={this.changeSortMethod.bind(this)}>
             <option value="score">Score</option>
             <option value="time">Time Posted</option>
           </select>
-        </form> <br />
+          <Divider />
         {sort(Object.values(posts)).map((post) => (
           <PostStub
             key={post.id}

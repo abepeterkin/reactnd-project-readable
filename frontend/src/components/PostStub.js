@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import { fetchPostComments, upvotePost, downvotePost } from '../actions'
+import { Icon, Segment } from 'semantic-ui-react'
 
 class PostStub extends Component {
 
@@ -20,16 +21,16 @@ class PostStub extends Component {
     const { id, title, author, category, voteScore } = this.props.post
     const comments = this.props.comments
     return (
-      <div className='post-stub'>
-        <span>{voteScore} 
-          <button className='upvote-button' onClick={this.upvote.bind(this)}>+1</button>
-          <button className='downvote-button' onClick={this.downvote.bind(this)}>-1</button> 
+      <Segment>
+        <span>Score: <b>{voteScore}</b> 
+          <Icon link size='large' name='thumbs outline up' onClick={this.upvote.bind(this)}></Icon>
+          <Icon link size='large' name='thumbs outline down' onClick={this.downvote.bind(this)}></Icon> 
         </span>
         <a href={`/${category}/${id}`}><b>{author}:</b> {title}</a> 
         {comments && 
           <span> ({comments.length} comments)</span>
         }
-      </div>
+      </Segment>
     )
   }
 }

@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import { fetchComment, upvoteComment, downvoteComment, editComment, deleteComment } from '../actions'
 import EditComment from './EditComment'
+import { Icon, Segment, Button } from 'semantic-ui-react'
 
 class Comment extends Component {
 
@@ -58,14 +59,18 @@ class Comment extends Component {
   render () {
     const {body, author, voteScore} = this.props.comment
     return (
-      <div className='comment'>
-        <b>{' ' + author}</b>: {body} <br />
-        Score: {voteScore}
-        <button className='upvote-button' onClick={this.upvote.bind(this)}>+1</button>
-        <button className='downvote-button'onClick={this.downvote.bind(this)}>-1</button> 
-        <EditComment comment={this.props.comment}/>
-        <button onClick={this.delete.bind(this)}>Delete</button>
-      </div>
+      <Segment.Group >
+        <Segment>
+          <b>{' ' + author}</b>: {body} <br />
+        </Segment>
+        <Segment secondary>
+          Score: <b>{voteScore}</b>
+          <Icon link size='big' name='thumbs outline up' onClick={this.upvote.bind(this)}></Icon>
+          <Icon link size='big' name='thumbs outline down' onClick={this.downvote.bind(this)}></Icon> 
+          <EditComment comment={this.props.comment}/>
+          <Button basic color='red' compact onClick={this.delete.bind(this)}>Delete</Button>
+        </Segment>
+      </Segment.Group>
     )
   }
 }
