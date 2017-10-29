@@ -13,7 +13,12 @@ class NavBar extends Component {
     const { categories } = this.props
     return (
       <Menu>
-        <Menu.Item header > Readable </Menu.Item>
+        <Menu.Item header> 
+          Readable
+        </Menu.Item>
+        <Menu.Item> 
+          <a href={`/`} > home </a> 
+        </Menu.Item>
         {Object.values(categories).map((category) => (
           <Menu.Item key={category.name} name={category.name}>
             <a href={`/${category.path}`} > {category.name} </a>

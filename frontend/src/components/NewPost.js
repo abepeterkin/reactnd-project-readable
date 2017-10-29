@@ -10,7 +10,8 @@ class NewPost extends Component {
     modalOpen: false,
     author: '',
     title: '',
-    body: ''
+    body: '',
+    category: null
   }
 
   openEditModal() {
@@ -25,12 +26,12 @@ class NewPost extends Component {
     })
   }
 
-  handleCategoryChange(event) {
-    console.log('handlecatagorychange')
+  /*handleCategoryChange(event) {
+    console.log('gets called')
     this.setState({
       category: event.target.value
     })
-  }
+  }*/
 
   handleAuthorChange(event) {
     this.setState({
@@ -52,9 +53,11 @@ class NewPost extends Component {
 
   submitComment(event) {
     const category = document.getElementById('category-select').value;
-    this.props.dispatch(addPost(this.state.title, this.state.body, this.state.author, category))
-    event.preventDefault()
-    this.closeEditModal()
+    if (category) {
+      this.props.dispatch(addPost(this.state.title, this.state.body, this.state.author, category))
+      event.preventDefault()
+      this.closeEditModal()
+    }
   }
 
   render () {
@@ -67,22 +70,21 @@ class NewPost extends Component {
     ))
     return (
       <div>
-      <Button  onClick={this.openEditModal.bind(this)}>Make a new post</Button>
+      <Button onClick={this.openEditModal.bind(this)}>Make a new post</Button>
       <Modal
-      className='modal'
-      overlayClassName='overlay'
-      isOpen={this.state.modalOpen}
-      onRequestClose={this.closeEditModal.bind(this)}
-      contentLabel='Modal'
-    >
+        className='modal'
+        overlayClassName='overlay'
+        isOpen={this.state.modalOpen}
+        onRequestClose={this.closeEditModal.bind(this)}
+        contentLabel='Modal'
+      >
       <Form onSubmit={this.submitComment.bind(this)}>
         <Header as='h4' > Category: </Header>
-        <Select 
-          id='category-select' 
-          placeholder='Select a category' 
-          onChange={this.handleCategoryChange.bind(this)} 
-          options={categories} 
-        />
+        <select id='category-select' /*onChange={this.handleCategoryChange.bind(this)}*/>
+          {categories.map((category) => (
+            <option key={category.key} value={category.value}> {category.text} </option>
+          ))}
+        </select> <br />
         <Header as='h4'>Author:</ Header> 
         <Input
           onBlur={this.handleAuthorChange.bind(this)}> 
@@ -98,7 +100,7 @@ class NewPost extends Component {
         </TextArea> <br />
         <Button type='submit'>SUBMIT </Button>
       </Form>
-    </Modal>
+      </Modal>
       </div>
     )
   }
