@@ -30,6 +30,7 @@ class MainPage extends Component {
     const { sort } = this.state
     return (
       <div>
+        <Header as='h1'> Welcome to Readable! </Header>
         <NewPost categories={Object.keys(categories)}/>
         <Header as='h2'>Posts: </Header>
           Sort by
