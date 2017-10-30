@@ -42,7 +42,7 @@ class Post extends Component {
 
   render () {
     if (this.props.post) {
-      const {id, title, timestamp, body, author, voteScore} = this.props.post
+      const {id, title, timestamp, body, author, voteScore, category} = this.props.post
       const date = new Date(timestamp)
       const timeFormatted = date.toDateString()
       const comments = this.props.comments
@@ -54,7 +54,7 @@ class Post extends Component {
               <p>{body}</p>
             </Segment>
             <Segment secondary>
-              <p> Posted by <b>{author}</b> on <b>{timeFormatted}</b> </p>
+              <p> Posted by <b>{author}</b> on <b>{timeFormatted}</b> in category: <b>{category}</b></p>
               Score: <b>{voteScore}  </b>
               <Icon link size='big' name='thumbs outline up' onClick={this.upvote.bind(this)}></Icon>
               <Icon  link size='big' name='thumbs outline down' onClick={this.downvote.bind(this)}></Icon> 

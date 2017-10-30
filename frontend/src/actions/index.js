@@ -40,7 +40,7 @@ export const fetchPost = (id) => dispatch => (
 )
 
 export const addPost = (title, body, author, category) => dispatch => (
-  API.addPost(title, author, body, category).then(post => dispatch(recievePosts([post])))
+  API.addPost(title, body, author, category).then(post => dispatch(recievePosts([post])))
 )
 
 export const editPost = (id, title, body) => dispatch => (

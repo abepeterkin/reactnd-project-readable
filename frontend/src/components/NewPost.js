@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import { addPost } from '../actions'
 import Modal from 'react-modal'
-import { Input, TextArea, Select, Button, Header, Form } from 'semantic-ui-react'
+import { Input, TextArea, Button, Header, Form } from 'semantic-ui-react'
 
 class NewPost extends Component {
 
@@ -26,13 +26,6 @@ class NewPost extends Component {
     })
   }
 
-  /*handleCategoryChange(event) {
-    console.log('gets called')
-    this.setState({
-      category: event.target.value
-    })
-  }*/
-
   handleAuthorChange(event) {
     this.setState({
       author: event.target.value
@@ -41,7 +34,7 @@ class NewPost extends Component {
 
   handleTitleChange(event) {
     this.setState({
-      author: event.target.value
+      title: event.target.value
     })
   }
 
@@ -80,7 +73,7 @@ class NewPost extends Component {
       >
       <Form onSubmit={this.submitComment.bind(this)}>
         <Header as='h4' > Category: </Header>
-        <select id='category-select' /*onChange={this.handleCategoryChange.bind(this)}*/>
+        <select id='category-select'>
           {categories.map((category) => (
             <option key={category.key} value={category.value}> {category.text} </option>
           ))}
