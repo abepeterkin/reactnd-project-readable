@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import { fetchPostComments, upvotePost, downvotePost } from '../actions'
-import { Icon, Segment } from 'semantic-ui-react'
+import { Icon, Segment, Button } from 'semantic-ui-react'
+import EditPost from './EditPost'
 
 class PostStub extends Component {
 
@@ -17,6 +18,10 @@ class PostStub extends Component {
     this.props.dispatch(downvotePost(this.props.post.id))
   }
 
+  delete() {
+    this.props.deletePost(this.props.post.id)
+  }
+
   render () {
     const { id, title, author, category, voteScore } = this.props.post
     const comments = this.props.comments
@@ -26,10 +31,12 @@ class PostStub extends Component {
           <Icon link size='large' name='thumbs outline up' onClick={this.upvote.bind(this)}></Icon>
           <Icon link size='large' name='thumbs outline down' onClick={this.downvote.bind(this)}></Icon> 
         </span>
-        <a href={`/${category}/${id}`}><b>{author}:</b> {title}</a> 
-        {comments && 
+        <a href={`/${category}/${id}`}><b>{author}:</b> {title}</a>
+       {comments && 
           <span> ({comments.length} comments)</span>
         }
+        <EditPost post={this.props.post} />
+        <Button basic color='red' onClick={this.delete.bind(this)}>Delete</Button> 
       </Segment>
     )
   }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchCategories, fetchAllPosts } from '../actions'
+import { fetchCategories, fetchAllPosts, deletePost } from '../actions'
 import PostStub from './PostStub'
 import { voteScoreSort, timestampSort } from '../utils/sort'
 import NewPost from './NewPost'
@@ -25,6 +25,10 @@ class MainPage extends Component {
     }
   }
 
+  deletePost(id) {
+    this.props.dispatch(deletePost(id))
+  }
+
   render () {
     const { categories, posts } = this.props
     const { sort } = this.state
@@ -43,6 +47,7 @@ class MainPage extends Component {
           <PostStub
             key={post.id}
             post={post}
+            deletePost={this.deletePost.bind(this)}
           />
         ))}
       </div>

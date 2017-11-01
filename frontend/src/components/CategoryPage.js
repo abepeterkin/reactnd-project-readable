@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
-import { fetchCategoryPosts } from '../actions'
+import { fetchCategoryPosts, deletePost } from '../actions'
 import PostStub from './PostStub'
 import NewPost from './NewPost'
 import { Header, Divider } from 'semantic-ui-react'
@@ -25,6 +25,11 @@ class CategoryPage extends Component {
     }
   }
 
+  deletePost(id) {
+    this.props.dispatch(deletePost(id))
+    this.setState(this.state)
+  }
+
   render () {
     const category = this.props.match.params.category
     const { posts } = this.props
@@ -45,6 +50,7 @@ class CategoryPage extends Component {
         <PostStub
           key={post.id}
           post={post}
+          deletePost={this.deletePost.bind(this)}
         />
       ))}
       </div>

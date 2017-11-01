@@ -2,6 +2,7 @@ const API = require('../utils/api')
 
 export const RECIEVE_CATEGORIES = 'RECEIVE_CATEGORIES'
 export const RECIEVE_POSTS = 'RECEIVE_POSTS'
+export const DELETE_POSTS = 'DELETE_POSTS'
 export const RECIEVE_COMMENTS = 'RECEIVE_COMMENTS'
 
 export const receiveCategories = categories => ({
@@ -11,6 +12,11 @@ export const receiveCategories = categories => ({
 
 export const recievePosts = posts => ({
   type: RECIEVE_POSTS,
+  posts
+})
+
+export const deletePosts = posts => ({
+  type: DELETE_POSTS,
   posts
 })
 
@@ -48,7 +54,7 @@ export const editPost = (id, title, body) => dispatch => (
 )
 
 export const deletePost = (id) => dispatch => (
-  API.deletePost(id).then(post => dispatch(recievePosts([post])))
+  API.deletePost(id).then(post => dispatch(deletePosts([post])))
 )
 
 export const upvotePost = (id) => dispatch => (

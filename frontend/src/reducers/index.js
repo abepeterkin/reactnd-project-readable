@@ -3,6 +3,7 @@ import { combineReducers } from 'redux'
 import {
   RECIEVE_CATEGORIES,
   RECIEVE_POSTS,
+  DELETE_POSTS,
   RECIEVE_COMMENTS
 } from '../actions'
 
@@ -58,14 +59,20 @@ function categories (state = {}, action) {
 }
 
 function posts (state = {}, action) {
+  let newState = {
+    ...state
+  }
   switch (action.type) {
     case RECIEVE_POSTS:
-      let newState = {
-          ...state
-      }
       for (let i = 0; i < action.posts.length; i++) {
         const post = action.posts[i]
         newState[post.id] = post
+      }
+      return newState
+    case DELETE_POSTS:
+      for (let i = 0; i < action.posts.length; i++) {
+        const post = action.posts[i]
+        delete newState[post.id]
       }
       return newState
     default:
